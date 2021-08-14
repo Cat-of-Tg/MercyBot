@@ -1,4 +1,3 @@
-
 import importlib
 import re
 from typing import Optional, List
@@ -18,18 +17,28 @@ from tg_bot.modules import ALL_MODULES
 from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
-PM_START_TEXT = """(https://telegra.ph/file/8bab8e2b94fa3234927b5.jpg)
-ʜᴏʟᴀ {} ɪ ᴀᴍ ᴍᴇʀᴄʏ
-ᴀᴍ ᴀ ᴘᴏᴡᴇʀғᴜʟʟ ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ.
-ғᴏʀ ᴍᴏʀᴇ ʜɪᴛ ʜᴇʟᴘ ʙᴜᴛᴛᴏɴ.
+PM_START_TEXT = """
+ʜᴇʏ {}, ɪ ᴀᴍ {}! ɪ ᴀᴍ ᴀ ᴘᴏᴡᴇʀғᴜʟʟ ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ᴍʏ [ᴍᴀsᴛᴇʀ](tg://user?id={}) 
+ʜɪᴛ /help ғᴏʀ ᴍᴏʀᴇ ʜᴇʟᴘ 
 """
 
 HELP_STRINGS = """
-ʜᴏʟᴀ ɪ ᴀᴍ *{}*.
-ᴄᴏᴍᴍᴀɴᴅs:
+ʜᴇʏ ᴛʜᴇʀᴇ ! ᴍʏ ɴᴀᴍᴇ ɪs *{}*.
+I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of \
+the things I can help you with.
+*Main* commands available:
+ - /start: sᴛᴀʀᴛ ᴏʀ ʀᴇsᴛᴀʀ ᴛʜᴇ ʙᴏᴛ.
+ - /help: ᴘᴍs ғᴏʀ ᴛʜɪs ʙᴏᴛ.
+ - /help <module name>: ᴘᴍs ʏᴏᴜ ɪɴғᴏ ᴀʙᴏᴜᴛ ᴛʜᴇ ᴍᴏᴅᴜʟᴇ.
+ - /donate: ɪɴғᴏ ᴀʙᴏᴜᴛ ʜᴏᴡ ᴛᴏ ᴅᴏɴᴀᴛᴇ 
+ - /settings: sᴇᴛᴛɪɴɢs 
+   - in PM: will send you your settings for all supported modules.
+   - in a group: will redirect you to pm, with all that chat's settings.
+{}
+And the following:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-DONATE_STRING = """ɴᴏ ɴᴇᴇᴅ ᴏғ ᴍᴏɴᴇʏ, sᴜᴘᴘᴏʀᴛ ᴜs """
+DONATE_STRING = """ ɴᴏ ɴᴇᴇᴅ ғᴏʀ ᴍᴏɴᴇʏ, ʜᴀᴠᴇ ᴀ ʟᴏʟʏᴘᴏᴘ ᴡɪᴛʜ ᴛʜᴀᴛ🍭."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -126,12 +135,12 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
 
                 parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(text="ᴀᴅᴅ ᴍᴇ", url="t.me/{}?startgroup=true".format(bot.username)),  InlineKeyboardButton(text="ᴅᴇᴠ", url="https://t.me/ok_bie_bot")],
-                     [InlineKeyboardButton(text=" ᴍᴜsɪᴄ ɢʀᴏᴜᴘ"="https://t.me/music_and_chats")],
-                     [InlineKeyboardButton(text="sᴜᴘᴘᴏʀᴛ", url="https://t.me/teamladz_bothub"), InlineKeyboardButton(text="ʜᴇʟᴘ", url="https://t.me/{}?start=help".format(bot.username)) ]]))
+                    [[InlineKeyboardButton(text=" ᴀᴅᴅ ᴍᴇ ᴛᴏɴʏᴏᴜʀ ɢʀᴏᴜᴘ", url="t.me/{}?startgroup=true".format(bot.username)),  InlineKeyboardButton(text="🎧ᴍᴜsɪᴄ ɢʀᴏᴜᴘ", url="https://t.me/music_and_chats")],
+                     [InlineKeyboardButton(text=" sᴜᴘᴘᴏʀᴛ", url="TEAMLADZ_BOTHUB")],
+                     [InlineKeyboardButton(text=" ᴅᴇᴠ", url="https://t.me/ok_bie_bot"), InlineKeyboardButton(text="ʜᴇʟᴘ", url="https://t.me/{}?start=help".format(bot.username)) ]]))
 
     else:
-        update.effective_message.reply_text("ᴀʟɪᴠᴇ...")
+        update.effective_message.reply_text("sᴛɪʟʟ ᴡᴏʀᴋɪɴɢ..")
 
 
 # for test purposes
@@ -205,4 +214,260 @@ def help_button(bot: Bot, update: Update):
     except BadRequest as excp:
         if excp.message == "Message is not modified":
             pass
-        elif 
+        elif excp.message == "Query_id_invalid":
+            pass
+        elif excp.message == "Message can't be deleted":
+            pass
+        else:
+            LOGGER.exception("Exception in help buttons. %s", str(query.data))
+
+
+@run_async
+def get_help(bot: Bot, update: Update):
+    chat = update.effective_chat  # type: Optional[Chat]
+    args = update.effective_message.text.split(None, 1)
+
+    # ONLY send help in PM
+    if chat.type != chat.PRIVATE:
+
+        update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
+                                            reply_markup=InlineKeyboardMarkup(
+                                                [[InlineKeyboardButton(text="Help",
+                                                                       url="t.me/{}?start=help".format(
+                                                                           bot.username))]]))
+        return
+
+    elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
+        module = args[1].lower()
+        text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
+               + HELPABLE[module].__help__
+        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
+
+    else:
+        send_help(chat.id, HELP_STRINGS)
+
+
+def send_settings(chat_id, user_id, user=False):
+    if user:
+        if USER_SETTINGS:
+            settings = "\n\n".join(
+                "*{}*:\n{}".format(mod.__mod_name__, mod.__user_settings__(user_id)) for mod in USER_SETTINGS.values())
+            dispatcher.bot.send_message(user_id, "These are your current settings:" + "\n\n" + settings,
+                                        parse_mode=ParseMode.MARKDOWN)
+
+        else:
+            dispatcher.bot.send_message(user_id, "Seems like there aren't any user specific settings available :'(",
+                                        parse_mode=ParseMode.MARKDOWN)
+
+    else:
+        if CHAT_SETTINGS:
+            chat_name = dispatcher.bot.getChat(chat_id).title
+            dispatcher.bot.send_message(user_id,
+                                        text="Which module would you like to check {}'s settings for?".format(
+                                            chat_name),
+                                        reply_markup=InlineKeyboardMarkup(
+                                            paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
+        else:
+            dispatcher.bot.send_message(user_id, "Seems like there aren't any chat settings available :'(\nSend this "
+                                                 "in a group chat you're admin in to find its current settings!",
+                                        parse_mode=ParseMode.MARKDOWN)
+
+
+@run_async
+def settings_button(bot: Bot, update: Update):
+    query = update.callback_query
+    user = update.effective_user
+    mod_match = re.match(r"stngs_module\((.+?),(.+?)\)", query.data)
+    prev_match = re.match(r"stngs_prev\((.+?),(.+?)\)", query.data)
+    next_match = re.match(r"stngs_next\((.+?),(.+?)\)", query.data)
+    back_match = re.match(r"stngs_back\((.+?)\)", query.data)
+    try:
+        if mod_match:
+            chat_id = mod_match.group(1)
+            module = mod_match.group(2)
+            chat = bot.get_chat(chat_id)
+            text = "*{}* has the following settings for the *{}* module:\n\n".format(escape_markdown(chat.title),
+                                                                                     CHAT_SETTINGS[module].__mod_name__) + \
+                   CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
+            query.message.reply_text(text=text,
+                                     parse_mode=ParseMode.MARKDOWN,
+                                     reply_markup=InlineKeyboardMarkup(
+                                         [[InlineKeyboardButton(text="Back",
+                                                                callback_data="stngs_back({})".format(chat_id))]]))
+
+        elif prev_match:
+            chat_id = prev_match.group(1)
+            curr_page = int(prev_match.group(2))
+            chat = bot.get_chat(chat_id)
+            query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
+                                     "you're interested in.".format(chat.title),
+                                     reply_markup=InlineKeyboardMarkup(
+                                         paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
+                                                          chat=chat_id)))
+
+        elif next_match:
+            chat_id = next_match.group(1)
+            next_page = int(next_match.group(2))
+            chat = bot.get_chat(chat_id)
+            query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
+                                     "you're interested in.".format(chat.title),
+                                     reply_markup=InlineKeyboardMarkup(
+                                         paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
+                                                          chat=chat_id)))
+
+        elif back_match:
+            chat_id = back_match.group(1)
+            chat = bot.get_chat(chat_id)
+            query.message.reply_text(text="Hi there! There are quite a few settings for {} - go ahead and pick what "
+                                          "you're interested in.".format(escape_markdown(chat.title)),
+                                     parse_mode=ParseMode.MARKDOWN,
+                                     reply_markup=InlineKeyboardMarkup(paginate_modules(0, CHAT_SETTINGS, "stngs",
+                                                                                        chat=chat_id)))
+
+        # ensure no spinny white circle
+        bot.answer_callback_query(query.id)
+        query.message.delete()
+    except BadRequest as excp:
+        if excp.message == "Message is not modified":
+            pass
+        elif excp.message == "Query_id_invalid":
+            pass
+        elif excp.message == "Message can't be deleted":
+            pass
+        else:
+            LOGGER.exception("Exception in settings buttons. %s", str(query.data))
+
+
+@run_async
+def get_settings(bot: Bot, update: Update):
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
+    msg = update.effective_message  # type: Optional[Message]
+    args = msg.text.split(None, 1)
+
+    # ONLY send settings in PM
+    if chat.type != chat.PRIVATE:
+        if is_user_admin(chat, user.id):
+            text = "Click here to get this chat's settings, as well as yours."
+            msg.reply_text(text,
+                           reply_markup=InlineKeyboardMarkup(
+                               [[InlineKeyboardButton(text="Settings",
+                                                      url="t.me/{}?start=stngs_{}".format(
+                                                          bot.username, chat.id))]]))
+        else:
+            text = "Click here to check your settings."
+
+    else:
+        send_settings(chat.id, user.id, True)
+
+
+@run_async
+def donate(bot: Bot, update: Update):
+    user = update.effective_message.from_user
+    chat = update.effective_chat  # type: Optional[Chat]
+
+    if chat.type == "private":
+        update.effective_message.reply_text(DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
+        if OWNER_ID != 254318997 and DONATION_LINK:
+            update.effective_message.reply_text("You can also donate to the person currently running me "
+                                                "[here]({})".format(DONATION_LINK),
+                                                parse_mode=ParseMode.MARKDOWN)
+
+    else:
+        try:
+            bot.send_message(user.id, DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+
+            update.effective_message.reply_text("I've PM'ed you about donating to my creator!")
+        except Unauthorized:
+            update.effective_message.reply_text("Contact me in PM first to get donation information.")
+
+
+def migrate_chats(bot: Bot, update: Update):
+    msg = update.effective_message  # type: Optional[Message]
+    if msg.migrate_to_chat_id:
+        old_chat = update.effective_chat.id
+        new_chat = msg.migrate_to_chat_id
+    elif msg.migrate_from_chat_id:
+        old_chat = msg.migrate_from_chat_id
+        new_chat = update.effective_chat.id
+    else:
+        return
+
+    LOGGER.info("Migrating from %s, to %s", str(old_chat), str(new_chat))
+    for mod in MIGRATEABLE:
+        mod.__migrate__(old_chat, new_chat)
+
+    LOGGER.info("Successfully migrated!")
+    raise DispatcherHandlerStop
+
+
+@run_async
+def kcfrsct_fnc(bot: Bot, update: Update):
+    query = update.callback_query
+    user = update.effective_user
+    _match = re.match(r"rsct_(.*)_33801", query.data)
+    # ensure no spinny white circle
+    if _match:
+        try:
+            from tg_bot.modules.sql.cust_filters_sql import get_btn_with_di
+            _soqka = get_btn_with_di(int(_match.group(1)))
+            query.answer(
+                text=_soqka.url.replace("\\n", "\n").replace("\\t", "\t"),
+                # HPFPOCWBANER: https://stackoverflow.com/a/42965750
+                show_alert=True
+            )
+        except Exception as e:
+            print(e)
+            bot.answer_callback_query(query.id)
+
+
+def main():
+    test_handler = CommandHandler("test", test)
+    start_handler = CommandHandler("start", start, pass_args=True)
+
+    help_handler = CommandHandler("help", get_help)
+    help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
+
+    settings_handler = CommandHandler("settings", get_settings)
+    settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
+
+    donate_handler = CommandHandler("donate", donate)
+    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
+
+    # dispatcher.add_handler(test_handler)
+    dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(help_handler)
+    dispatcher.add_handler(settings_handler)
+    dispatcher.add_handler(help_callback_handler)
+    dispatcher.add_handler(settings_callback_handler)
+    dispatcher.add_handler(migrate_handler)
+    dispatcher.add_handler(donate_handler)
+    dispatcher.add_handler(
+        CallbackQueryHandler(kcfrsct_fnc, pattern=r"")
+    )
+
+    # dispatcher.add_error_handler(error_callback)
+
+    if WEBHOOK:
+        LOGGER.info("Using webhooks.")
+        updater.start_webhook(listen="0.0.0.0",
+                              port=PORT,
+                              url_path=TOKEN)
+
+        if CERT_PATH:
+            updater.bot.set_webhook(url=URL + TOKEN,
+                                    certificate=open(CERT_PATH, 'rb'))
+        else:
+            updater.bot.set_webhook(url=URL + TOKEN)
+
+    else:
+        LOGGER.info("Using long polling.")
+        updater.start_polling(timeout=15, read_latency=4, clean=True)
+
+    updater.idle()
+
+
+if __name__ == '__main__':
+    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
+    main()
